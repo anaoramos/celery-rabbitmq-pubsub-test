@@ -1,0 +1,40 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    depends_on:
+      - rabbitmq
+    ports:
+      - "8000:8000"
+  worker:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - rabbitmq
+    command: 'bash -c "/usr/src/.venv/bin/celery -A celery_app worker -E --concurrency=1"'
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    healthcheck:
+      test: [ "CMD", "celery", "inspect", "ping", "-A", "celery_app" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+  rabbitmq:
+      image: rabbitmq:management
+      ports:
+        - "5672:5672"
+        - "15672:15672"
+      environment:
+        - RABBITMQ_DEFAULT_USER=admin
+        - RABBITMQ_DEFAULT_PASS=admin
+      healthcheck:
+        test: [ "CMD", "curl", "-f", "http://localhost:15672" ]
+        interval: 30s
+        timeout: 10s
+        retries: 5

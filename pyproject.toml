@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "celery-rabbitmq-pubsub-test"
+version = "0.1.0"
+description = "Testing Celery with RabbitMQ and Google Pub/Sub integration"
+authors = ["ana-otoai <ana.ramos@oto.ai>"]
+license = "anaforamos@gmail.com"
+readme = "README.md"
+packages = [{include = "celery_rabbitmq_pubsub_test"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+celery = "^5.2.7"
+kombu = "^5.2.4"
+fastapi = "^0.95.2"
+uvicorn = "^0.22.0"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
