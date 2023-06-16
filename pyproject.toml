@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "celery-rabbitmq-pubsub-test"
+name = "fastapi-celery-docker-job-submission"
 version = "0.1.0"
 description = "Testing Celery with RabbitMQ and Google Pub/Sub integration"
 authors = ["ana-otoai <ana.ramos@oto.ai>"]
@@ -8,12 +8,15 @@ readme = "README.md"
 packages = [{include = "celery_rabbitmq_pubsub_test"}]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.8.1"
 celery = "^5.2.7"
 kombu = "^5.2.4"
 fastapi = "^0.95.2"
 uvicorn = "^0.22.0"
 requests = "^2.31.0"
+flake8 = "^6.0.0"
+pre-commit-hooks = "^4.4.0"
+isort = "^5.12.0"
 
 
 [build-system]

@@ -27,10 +27,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy python virtual environment
 COPY --from=builder /usr/src/.venv/ $SITE_DIR/.venv/
 
-# Copy the rest of your application code to the container
-#COPY app /usr/src/app/app
-#COPY app/ /usr/src/app/app
-
 WORKDIR ${SITE_DIR}/app
 COPY . .
 

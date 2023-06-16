@@ -1,10 +1,11 @@
-from app.tasks.data_validation import data_validation
-from app.tasks.data_aggregation import data_aggregation
-
-from pydantic import BaseModel
-import requests
 import json
+
+import requests
 from fastapi import HTTPException
+from pydantic import BaseModel
+
+from app.tasks.data_aggregation import data_aggregation
+from app.tasks.data_validation import data_validation
 
 
 class ProcessingJob(BaseModel):
@@ -12,7 +13,7 @@ class ProcessingJob(BaseModel):
 
 
 def schedule_data_processing(data):
-    data_validation.apply_async(args=data, link=data_aggregation.s())
+    data_validation.apply_async(data, link=data_aggregation.s())
 
 
 def send_get_request(url: str):

@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     depends_on:
-      - rabbitmq
+      - worker
     ports:
       - "8000:8000"
   worker:
@@ -16,7 +16,7 @@ services:
       - .:/usr/src/app
     depends_on:
       - rabbitmq
-    command: 'bash -c "/usr/src/.venv/bin/celery -A celery_app worker -E --concurrency=1"'
+    command: 'bash -c "/usr/src/.venv/bin/celery -A celery_app worker -E --concurrency=1 --loglevel=INFO"'
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin
@@ -30,6 +30,8 @@ services:
       ports:
         - "5672:5672"
         - "15672:15672"
+      volumes:
+        - "./rabbitmq_config/rabbitmq_enabled_plugins:/etc/rabbitmq/enabled_plugins"
       environment:
         - RABBITMQ_DEFAULT_USER=admin
         - RABBITMQ_DEFAULT_PASS=admin
